@@ -8,6 +8,14 @@ import { Button } from "@/components/ui/button"
 
 const projects = [
   {
+    title: "FloppyHous Website Showcase",
+    description: "A polished marketing and event showcase website with dynamic event routes, list filtering for all/upcoming/previous events, countdown experiences, and smooth interaction animations built for desktop and mobile.",
+    image: "linear-gradient(135deg, #22d3ee 0%, #a855f7 100%)",
+    tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    link: "https://github.com/ayerkhalix/floppyhous-website-showcase",
+    github: "https://github.com/ayerkhalix/floppyhous-website-showcase",
+  },
+  {
     title: "Microgenesis Central Hub",
     description: "A centralized access system implementing Microsoft SSO and role-based permissions to manage users across internal tools. Designed for secure authentication, scalable user management, and streamlined internal workflows.",
     image: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
@@ -27,7 +35,7 @@ const projects = [
     title: "CaulerID",
     description: "A mobile app that uses machine learning to identify lato (sea grapes) species and assess freshness through image recognition. Built to support quality control and informed decision-making using on-device and server-side inference.",
     image: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-    tags: ["Flutter", "Python", "Tensorflow", "Django"],
+    tags: ["React Native Expo", "Python", "Tensorflow", "Django"],
     link: "#",
     github: "#",
   },

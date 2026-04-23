@@ -2,13 +2,18 @@
 
 import React from "react"
 
+import Image from "next/image"
 import { useRef, useState, useEffect } from "react"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+
+const HERO_PHOTO_SRC = "/logo.jpg"
+const HERO_PHOTO_FALLBACK_SRC = "/placeholder-user.jpg"
 
 export function HeroLogo() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [isHovered, setIsHovered] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [photoSrc, setPhotoSrc] = useState(HERO_PHOTO_SRC)
 
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
@@ -36,15 +41,27 @@ export function HeroLogo() {
     mouseY.set(0)
   }
 
+  const handlePhotoError = () => {
+    if (photoSrc !== HERO_PHOTO_FALLBACK_SRC) {
+      setPhotoSrc(HERO_PHOTO_FALLBACK_SRC)
+    }
+  }
+
   // SSR fallback: static logo without animations
   if (!mounted) {
     return (
       <div className="relative flex items-center justify-center">
         <div className="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 rounded-full bg-gradient-to-br from-[#a855f7]/15 to-[#7c3aed]/15 border border-[#a855f7]/20 flex items-center justify-center">
-          <div className="w-40 h-40 sm:w-44 sm:h-44 lg:w-52 lg:h-52 xl:w-60 xl:h-60 rounded-full bg-gradient-to-br from-[#a855f7]/30 to-[#22d3ee]/30 flex items-center justify-center">
-            <svg className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 text-white/70" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-            </svg>
+          <div className="relative w-40 h-40 sm:w-44 sm:h-44 lg:w-52 lg:h-52 xl:w-60 xl:h-60 rounded-full border border-[#a855f7]/30 overflow-hidden">
+            <Image
+              src={photoSrc}
+              alt="Ayer Khali Abrio profile photo"
+              fill
+              sizes="(min-width: 1280px) 240px, (min-width: 1024px) 208px, (min-width: 640px) 176px, 160px"
+              className="object-cover"
+              priority
+              onError={handlePhotoError}
+            />
           </div>
         </div>
       </div>
@@ -104,7 +121,7 @@ export function HeroLogo() {
           >
             {/* Layered background gradients */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#a855f7]/15 via-[#7c3aed]/10 to-[#22d3ee]/15 transition-opacity duration-500" />
-            
+
             {/* Animated gradient ring */}
             <motion.div
               className="absolute inset-0 rounded-full"
@@ -120,31 +137,31 @@ export function HeroLogo() {
                 ease: "linear",
               }}
             />
-            
+
             {/* Inner mask to create ring effect */}
             <div className="absolute inset-[3px] rounded-full bg-background transition-colors duration-500" />
-            
+
             {/* Border ring */}
             <div className="absolute inset-0 rounded-full border border-[#a855f7]/25 transition-colors duration-300" />
-            
+
             {/* Inner content with 3D depth */}
-            <div 
+            <div
               className="absolute inset-0 flex items-center justify-center"
               style={{ transform: "translateZ(30px)" }}
             >
-              {/* Inner circle - avatar/logo placeholder - LARGER */}
               <motion.div
-                className="relative w-40 h-40 sm:w-44 sm:h-44 lg:w-52 lg:h-52 xl:w-60 xl:h-60 rounded-full bg-gradient-to-br from-[#a855f7]/30 via-[#7c3aed]/25 to-[#22d3ee]/30 border border-[#a855f7]/30 flex items-center justify-center overflow-hidden transition-all duration-300"
+                className="relative w-40 h-40 sm:w-44 sm:h-44 lg:w-52 lg:h-52 xl:w-60 xl:h-60 rounded-full border border-[#a855f7]/30 overflow-hidden transition-all duration-300"
                 style={{ transform: "translateZ(50px)" }}
               >
-                {/* Placeholder icon - replace with actual logo/image */}
-                <svg 
-                  className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 text-white/70 transition-colors duration-300" 
-                  fill="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                </svg>
+                <Image
+                  src={photoSrc}
+                  alt="Ayer Khali Abrio profile photo"
+                  fill
+                  sizes="(min-width: 1280px) 240px, (min-width: 1024px) 208px, (min-width: 640px) 176px, 160px"
+                  className="object-cover"
+                  priority
+                  onError={handlePhotoError}
+                />
 
                 {/* Light sweep on hover */}
                 <motion.div
@@ -159,7 +176,7 @@ export function HeroLogo() {
                     ease: "easeInOut",
                   }}
                 />
-                
+
                 {/* Subtle pulse glow */}
                 <motion.div
                   className="absolute inset-0 rounded-full"

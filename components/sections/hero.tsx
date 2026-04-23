@@ -33,7 +33,7 @@ export function HeroSection() {
     {
       icon: FaLinkedin,
       label: "LinkedIn",
-      action: () => window.open('https://linkedin.com/in/yourusername', '_blank'),
+      action: () => window.open('https://www.linkedin.com/in/ayer-khali-abrio-a71364362/', '_blank'),
       ariaLabel: "Visit LinkedIn profile",
     },
     {
