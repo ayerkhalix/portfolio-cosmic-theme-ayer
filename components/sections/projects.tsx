@@ -13,7 +13,7 @@ const projects = [
     description: "A polished marketing and event showcase website with dynamic event routes, list filtering for all/upcoming/previous events, countdown experiences, and smooth interaction animations built for desktop and mobile.",
     image: "/floppyhous.png",
     tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    link: "https://github.com/ayerkhalix/floppyhous-website-showcase",
+    link: "https://floppyhous-website-showcase-zjym.vercel.app/",
     github: "https://github.com/ayerkhalix/floppyhous-website-showcase",
   },
   {
@@ -37,7 +37,7 @@ const projects = [
     description: "A mobile app that uses machine learning to identify lato (sea grapes) species and assess freshness through image recognition. Built to support quality control and informed decision-making using on-device and server-side inference.",
     image: "/caulerid.png",
     tags: ["React Native Expo", "Python", "Tensorflow", "Django"],
-    link: "https://github.com/ayerkhalix/cauler-id",
+    link: "https://cauler-id-web-app.vercel.app/",
     github: "https://github.com/ayerkhalix/cauler-id",
   },
 ]
@@ -47,6 +47,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   const isProjectLinkExternal = project.link.startsWith("http")
   const isGithubLinkExternal = project.github.startsWith("http")
+  const hasProjectLink = project.link !== "#"
   
   const cardRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -126,12 +127,28 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
           animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: index % 2 === 0 ? 30 : -30 }}
           transition={{ duration: 0.5, delay: index * 0.15 + 0.2 }}
         >
-          <h3
-            className="text-2xl sm:text-3xl font-bold text-foreground mb-4 hover:text-transparent hover:bg-gradient-to-r hover:from-[#a855f7] hover:to-[#22d3ee] hover:bg-clip-text transition-all duration-300 cursor-pointer"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            {project.title}
-          </h3>
+          {hasProjectLink ? (
+            <a
+              href={project.link}
+              target={isProjectLinkExternal ? "_blank" : undefined}
+              rel={isProjectLinkExternal ? "noopener noreferrer" : undefined}
+              className="inline-block mb-4"
+            >
+              <h3
+                className="text-2xl sm:text-3xl font-bold text-foreground hover:text-transparent hover:bg-gradient-to-r hover:from-[#a855f7] hover:to-[#22d3ee] hover:bg-clip-text transition-all duration-300 cursor-pointer"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                {project.title}
+              </h3>
+            </a>
+          ) : (
+            <h3
+              className="text-2xl sm:text-3xl font-bold text-foreground mb-4"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              {project.title}
+            </h3>
+          )}
           <p className="text-muted-foreground leading-relaxed mb-6">
             {project.description}
           </p>
