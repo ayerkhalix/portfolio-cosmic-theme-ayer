@@ -236,8 +236,7 @@ export function ProjectsSection() {
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A curated collection of projects that showcase my approach to solving 
-            complex problems with elegant solutions.
+            Here are a few projects I've built and enjoyed working on.
           </p>
         </motion.div>
 
