@@ -122,9 +122,6 @@ function AutoScrollCarousel({ items, direction = 'left' }: AutoScrollCarouselPro
   const controls = useAnimation()
   const shouldReduceMotion = useReducedMotion()
   const [isHovered, setIsHovered] = useState(false)
-  
-  // Duplicate items for seamless scrolling - only need 2 sets
-  const duplicatedItems = [...items, ...items]
 
   useEffect(() => {
     if (shouldReduceMotion) return
@@ -161,27 +158,27 @@ function AutoScrollCarousel({ items, direction = 'left' }: AutoScrollCarouselPro
 
   return (
     <div 
-      className="relative overflow-hidden py-8"
+      className="relative overflow-hidden py-8 [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]"
       onMouseEnter={handleHoverStart}
       onMouseLeave={handleHoverEnd}
     >
       <motion.div
-        className="flex gap-6 will-change-transform transform-gpu"
+        className="flex will-change-transform transform-gpu"
         animate={controls}
         style={{ width: 'max-content' }}
       >
-        {duplicatedItems.map((tool, index) => (
-          <CarouselItem 
-            key={`${tool.name}-${index}`}
-            tool={tool}
-            index={index % items.length}
-          />
+        {[0, 1].map((setIndex) => (
+          <div key={setIndex} className="flex gap-6 pr-6">
+            {items.map((tool, index) => (
+              <CarouselItem
+                key={`${tool.name}-${setIndex}`}
+                tool={tool}
+                index={index}
+              />
+            ))}
+          </div>
         ))}
       </motion.div>
-      
-      {/* Gradient fade edges */}
-      <div className="absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-background via-background/90 to-transparent pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-48 bg-gradient-to-l from-background via-background/90 to-transparent pointer-events-none" />
     </div>
   )
 }

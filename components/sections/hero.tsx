@@ -167,9 +167,9 @@ export function HeroSection() {
               className="flex items-center justify-center lg:justify-start gap-8 sm:gap-12 pt-8 border-t border-border/50 w-full"
             >
               {[
-                { value: "5+", label: "Years Experience" },
-                { value: "50+", label: "Projects Delivered" },
-                { value: "30+", label: "Happy Clients" },
+                { value: "3+", label: "Years Experience" },
+                { value: "10", label: "Projects Delivered" },
+                { value: "5+", label: "Happy Clients" },
               ].map((stat, index) => (
                 <div key={stat.label} className="text-center lg:text-left">
                   <motion.div

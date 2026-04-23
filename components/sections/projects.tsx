@@ -3,6 +3,7 @@
 import { motion, useInView, useScroll, useTransform } from "framer-motion"
 import { useRef } from "react"
 import { ExternalLink, Github } from "lucide-react"
+import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
@@ -10,7 +11,7 @@ const projects = [
   {
     title: "FloppyHous Website Showcase",
     description: "A polished marketing and event showcase website with dynamic event routes, list filtering for all/upcoming/previous events, countdown experiences, and smooth interaction animations built for desktop and mobile.",
-    image: "linear-gradient(135deg, #22d3ee 0%, #a855f7 100%)",
+    image: "/floppyhous.png",
     tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
     link: "https://github.com/ayerkhalix/floppyhous-website-showcase",
     github: "https://github.com/ayerkhalix/floppyhous-website-showcase",
@@ -18,7 +19,7 @@ const projects = [
   {
     title: "Microgenesis Central Hub",
     description: "A centralized access system implementing Microsoft SSO and role-based permissions to manage users across internal tools. Designed for secure authentication, scalable user management, and streamlined internal workflows.",
-    image: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    image: "/centrral%20hub.png",
     tags: ["Next.js", "Django", "Node.js"],
     link: "#",
     github: "#",
@@ -26,24 +27,26 @@ const projects = [
   {
     title: "TrinitySync",
     description: "A centralized scheduling system that allows departments to assign subjects without time or room conflicts, while giving students a clear, unified view of their schedules. Includes conflict detection, role-based access, and real-time updates.",
-    image: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+    image: "/trinityflow.png",
     tags: ["Next.js", "Django", "Node.js"],
-    link: "#",
-    github: "#",
+    link: "https://github.com/ayerkhalix/trinity-sync",
+    github: "https://github.com/ayerkhalix/trinity-sync",
   },
   {
     title: "CaulerID",
     description: "A mobile app that uses machine learning to identify lato (sea grapes) species and assess freshness through image recognition. Built to support quality control and informed decision-making using on-device and server-side inference.",
-    image: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+    image: "/caulerid.png",
     tags: ["React Native Expo", "Python", "Tensorflow", "Django"],
-    link: "#",
-    github: "#",
+    link: "https://github.com/ayerkhalix/cauler-id",
+    github: "https://github.com/ayerkhalix/cauler-id",
   },
 ]
 
 function ProjectCard({ project, index }: { project: typeof projects[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const isProjectLinkExternal = project.link.startsWith("http")
+  const isGithubLinkExternal = project.github.startsWith("http")
   
   const cardRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -68,10 +71,12 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
         className={`relative group ${index % 2 === 1 ? "lg:order-2" : ""}`}
       >
         <div className="relative aspect-[16/10] rounded-2xl overflow-hidden">
-          {/* Gradient placeholder */}
-          <div
-            className="absolute inset-0 transition-transform duration-500 group-hover:scale-105"
-            style={{ background: project.image }}
+          <Image
+            src={project.image}
+            alt={`${project.title} preview`}
+            fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
           
           {/* Overlay */}
@@ -85,7 +90,11 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
               className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border-0"
               asChild
             >
-              <a href={project.link} target="_blank" rel="noopener noreferrer">
+              <a
+                href={project.link}
+                target={isProjectLinkExternal ? "_blank" : undefined}
+                rel={isProjectLinkExternal ? "noopener noreferrer" : undefined}
+              >
                 <ExternalLink className="w-5 h-5" />
               </a>
             </Button>
@@ -95,7 +104,11 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
               className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border-0"
               asChild
             >
-              <a href={project.github} target="_blank" rel="noopener noreferrer">
+              <a
+                href={project.github}
+                target={isGithubLinkExternal ? "_blank" : undefined}
+                rel={isGithubLinkExternal ? "noopener noreferrer" : undefined}
+              >
                 <Github className="w-5 h-5" />
               </a>
             </Button>
@@ -143,7 +156,11 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
               variant="outline"
               className="border-[#a855f7]/50 hover:border-[#a855f7] hover:bg-[#a855f7]/10 group bg-transparent"
             >
-              <a href={project.link}>
+              <a
+                href={project.link}
+                target={isProjectLinkExternal ? "_blank" : undefined}
+                rel={isProjectLinkExternal ? "noopener noreferrer" : undefined}
+              >
                 View Project
                 <ExternalLink className="w-4 h-4 ml-2 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
@@ -153,7 +170,11 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
               variant="ghost"
               className="hover:bg-muted/50"
             >
-              <a href={project.github}>
+              <a
+                href={project.github}
+                target={isGithubLinkExternal ? "_blank" : undefined}
+                rel={isGithubLinkExternal ? "noopener noreferrer" : undefined}
+              >
                 <Github className="w-4 h-4 mr-2" />
                 Code
               </a>
