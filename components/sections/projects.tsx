@@ -45,7 +45,7 @@ const projects = [
     description: "A cozy little web app made for sharing flowers and sweet messages online.",
     image: "/bloom%20for%20you.png",
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    link: "https://vercel.com/ayerkhalidesu-4298s-projects/bloom-for-you",
+    link: "https://happy-valentines-rachel.vercel.app/",
     github: "https://github.com/ayerkhalix/bloom-for-you",
   },
 ]
