@@ -2,8 +2,9 @@
 
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
-import { Quote } from "lucide-react"
+import { ChevronLeft, ChevronRight, Quote } from "lucide-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 
 const testimonials = [
   {
@@ -13,6 +14,14 @@ const testimonials = [
     company: "Microgenesis Business Systems",
     initials: "RDJ",
     gradient: "from-[#a855f7] to-[#7c3aed]",
+  },
+  {
+    quote: "The FloppyHous website showcase came out clean, fast, and easy to use. It captured our events perfectly and made the whole brand feel more alive online.",
+    author: "Patrick Abrio",
+    role: "CEO",
+    company: "FloppyHous",
+    initials: "PA",
+    gradient: "from-[#22d3ee] to-[#3b82f6]",
   },
   {
     quote: "Working with them was a game-changer for our product. They delivered a platform that exceeded our expectations in terms of performance and design.",
@@ -110,7 +119,21 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof testimoni
 
 export function TestimonialsSection() {
   const ref = useRef<HTMLDivElement>(null)
+  const sliderRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
+
+  const scrollTestimonials = (direction: "prev" | "next") => {
+    const slider = sliderRef.current
+    if (!slider) return
+
+    const firstCard = slider.querySelector<HTMLElement>("[data-testimonial-card]")
+    const scrollAmount = (firstCard?.offsetWidth ?? 320) + 24
+
+    slider.scrollBy({
+      left: direction === "next" ? scrollAmount : -scrollAmount,
+      behavior: "smooth",
+    })
+  }
 
   return (
     <section id="testimonials" className="relative py-24 sm:py-32">
@@ -151,10 +174,41 @@ export function TestimonialsSection() {
         </motion.div>
 
         {/* Testimonials grid */}
-        <div className="grid sm:grid-cols-2 gap-6 max-w-5xl mx-auto">
+        <div
+          ref={sliderRef}
+          className="no-scrollbar flex gap-6 overflow-x-auto snap-x snap-mandatory lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:snap-none max-w-6xl mx-auto"
+        >
           {testimonials.map((testimonial, index) => (
-            <TestimonialCard key={testimonial.author} testimonial={testimonial} index={index} />
+            <div
+              key={testimonial.author}
+              data-testimonial-card
+              className="snap-start flex-none w-[88%] sm:w-[70%] lg:w-auto"
+            >
+              <TestimonialCard testimonial={testimonial} index={index} />
+            </div>
           ))}
+        </div>
+        <div className="flex justify-center gap-2 mt-5 lg:hidden">
+          <Button
+            type="button"
+            size="icon"
+            variant="outline"
+            className="h-9 w-9"
+            onClick={() => scrollTestimonials("prev")}
+            aria-label="Previous testimonial"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            size="icon"
+            variant="outline"
+            className="h-9 w-9"
+            onClick={() => scrollTestimonials("next")}
+            aria-label="Next testimonial"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
         </div>
       </div>
     </section>

@@ -40,6 +40,14 @@ const projects = [
     link: "https://cauler-id-web-app.vercel.app/",
     github: "https://github.com/ayerkhalix/cauler-id",
   },
+  {
+    title: "Bloom For You",
+    description: "A cozy little web app made for sharing flowers and sweet messages online.",
+    image: "/bloom%20for%20you.png",
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    link: "https://vercel.com/ayerkhalidesu-4298s-projects/bloom-for-you",
+    github: "https://github.com/ayerkhalix/bloom-for-you",
+  },
 ]
 
 function ProjectCard({ project, index }: { project: typeof projects[0]; index: number }) {
@@ -230,13 +238,13 @@ export function ProjectsSection() {
             className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 text-balance"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Selected Work &{" "}
+            Selected Projects &{" "}
             <span className="bg-gradient-to-r from-[#a855f7] to-[#22d3ee] bg-clip-text text-transparent">
-              Experiments
+              Works
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Here are a few projects I've built and enjoyed working on.
+            A few things I've built recently.
           </p>
         </motion.div>
 
